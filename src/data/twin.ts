@@ -29,11 +29,12 @@ export const incidents: Incident[] = [
 ]
 
 export const resources: Resource[] = [
-  { id: 'R-B01', name: 'Rescue boats', type: 'boat', total: 184, available: 61, committed: 123, status: 'watch', location: '6 command flotillas', updatedAt: '09:40' },
-  { id: 'R-A01', name: 'Ambulances', type: 'ambulance', total: 54, available: 18, committed: 36, status: 'normal', location: '16 field posts', updatedAt: '09:39' },
-  { id: 'R-BU1', name: 'Shuttle buses', type: 'bus', total: 487, available: 93, committed: 394, status: 'watch', eta: '18 min headway', location: '5 peripheral loops', updatedAt: '09:40' },
-  { id: 'R-M01', name: 'Medical teams', type: 'medical', total: 30, available: 12, committed: 18, status: 'normal', location: '12 field hospitals', updatedAt: '09:38' },
-  { id: 'R-S01', name: 'Security deployments', type: 'security', total: 126, available: 14, committed: 112, status: 'restricted', location: '8 sectors', updatedAt: '09:40' }
+  { id: 'R-B01', name: 'Rescue boats', type: 'boat', total: 2697, available: 61, committed: 123, status: 'watch', location: '6 simulated command flotillas', updatedAt: '09:40', basis: 'official-plan', domain: 'river' },
+  { id: 'R-SW1', name: 'Trained swimmers', type: 'swimmer', total: 8955, available: 126, committed: 86, status: 'watch', location: 'River rescue sectors', updatedAt: '09:40', basis: 'official-plan', domain: 'river' },
+  { id: 'R-A01', name: 'Medical support vehicles', type: 'ambulance', total: 523, available: 18, committed: 36, status: 'normal', location: '16 simulated field posts', updatedAt: '09:39', basis: 'official-plan', domain: 'health' },
+  { id: 'R-BU1', name: 'Green-energy buses', type: 'bus', total: 487, available: 93, committed: 394, status: 'watch', eta: '18 min headway', location: '5 simulated peripheral loops', updatedAt: '09:40', basis: 'official-plan', domain: 'transport' },
+  { id: 'R-M01', name: 'Temporary field hospitals', type: 'medical', total: 30, available: 12, committed: 18, status: 'normal', location: '12 simulated field locations', updatedAt: '09:38', basis: 'official-plan', domain: 'health' },
+  { id: 'R-S01', name: 'Security deployments', type: 'security', total: 126, available: 14, committed: 112, status: 'restricted', location: '8 command sectors', updatedAt: '09:40', basis: 'simulation', domain: 'security' }
 ]
 
 export const crowdTimeline: TimelinePoint[] = [

@@ -1,7 +1,9 @@
-import { useMemo } from 'react'
-import { Activity, Droplets, MapPin, Radio, ShieldAlert, Waves } from 'lucide-react'
+import { lazy, Suspense, useMemo, useState } from 'react'
+import { Activity, Cuboid, Droplets, Map as MapIcon, MapPin, Radio, ShieldAlert, Waves } from 'lucide-react'
 import type { Ghat, Incident } from '../types'
 import { densityColor, flowBalance, occupancyPercent } from '../lib/simulation'
+
+const ThreeTwin = lazy(() => import('./ThreeTwin'))
 
 interface CommandMapProps {
   ghats: Ghat[]
@@ -12,19 +14,23 @@ interface CommandMapProps {
 }
 
 export function CommandMap({ ghats, incidents, selectedId, onSelect, showResources = false }: CommandMapProps) {
+  const [viewMode, setViewMode] = useState<'2d' | '3d'>('2d')
   const selected = useMemo(() => ghats.find(ghat => ghat.id === selectedId), [ghats, selectedId])
 
   return (
     <section className="twin-card map-card" aria-label="Operational ghat map">
       <div className="map-toolbar">
         <div>
-          <div className="eyebrow">Live operational layer</div>
+          <div className="eyebrow">{viewMode === '3d' ? '3D operational twin' : 'Live operational layer'}</div>
           <h2>Rajamahendravaram command area</h2>
         </div>
-        <div className="map-status"><span className="live-dot" />Simulation clock · 09:42 IST</div>
+        <div className="map-toolbar-actions">
+          <div className="map-view-toggle" aria-label="Map view"><button className={viewMode === '2d' ? 'active' : ''} onClick={() => setViewMode('2d')}><MapIcon size={13} />2D</button><button className={viewMode === '3d' ? 'active' : ''} onClick={() => setViewMode('3d')}><Cuboid size={13} />3D</button></div>
+          <div className="map-status"><span className="live-dot" />Simulation clock · 09:42 IST</div>
+        </div>
       </div>
       <div className="map-stage">
-        <svg viewBox="0 0 100 84" role="img" aria-label="Schematic river and ghat density map" preserveAspectRatio="none">
+        {viewMode === '2d' ? <svg viewBox="0 0 100 84" role="img" aria-label="Schematic river and ghat density map" preserveAspectRatio="none">
           <defs>
             <pattern id="blocks" width="8" height="8" patternUnits="userSpaceOnUse">
               <rect width="8" height="8" fill="#e9e6dc" />
@@ -74,7 +80,12 @@ export function CommandMap({ ghats, incidents, selectedId, onSelect, showResourc
               <path d="M-1.7 1h3.4M-1.3 1v-2h2.6v2M-1 0h.3M.7 0h.3" stroke="#0c4541" strokeWidth=".45" fill="none" />
             </g>
           )}
-        </svg>
+        </svg> : (
+          <div className="three-stage" aria-label="Interactive 3D operational twin">
+            <Suspense fallback={<div className="three-loading">Loading 3D operational twin…</div>}><ThreeTwin ghats={ghats} incidents={incidents} selectedId={selectedId} onSelect={onSelect} showResources={showResources} /></Suspense>
+            <div className="three-hint"><Cuboid size={13} />Drag to orbit · scroll to zoom · select a colored pillar</div>
+          </div>
+        )}
         <div className="map-legend">
           <span><i className="legend-dot low" />Flowing</span>
           <span><i className="legend-dot medium" />Watch</span>

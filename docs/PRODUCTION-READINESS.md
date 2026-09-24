@@ -16,13 +16,17 @@ The product deliberately avoids claiming a photorealistic city replica or precis
 
 As of 24 September 2026, official East Godavari District material states that the Godavari Pushkaralu 2027 runs from **26 June through 7 July 2027** across six Godavari-basin districts. The official district ghat page lists named ghats on the Rajamahendravaram and Kovvur banks, including Pushkar, Saraswati, Gowthami, Dowleswaram Barrage, Goshpada Kshetram, Subrahmanyeswara and Nagareswaram.
 
-Current government planning reported in August 2026 includes an estimated **8–10 crore visitors**, **440 ghats** across six districts, CCTV and drone monitoring, QR vehicle identification, 2,697 rescue boats, 8,955 trained swimmers and 30 temporary field hospitals. Counts and plans change; a production deployment must ingest the latest signed administrative plan rather than hard-code these figures.
+Current government planning reported in August and September 2026 includes an estimated **8–10 crore visitors**, a **525-ghat Health master plan** (225 existing and 300 proposed), a separate **440-ghat development portfolio** (259 existing upgraded and 181 new), CCTV and drone monitoring, QR vehicle identification, 2,697 rescue boats, 8,955 trained swimmers, 523 medical support vehicles and 30 temporary field hospitals. These are announced plans—not live availability. A production deployment must ingest the latest signed administrative plan rather than hard-code them.
 
 Key sources:
 
 - East Godavari District, event page: https://eastgodavari.ap.gov.in/godavari-pushkaralu-2027/
 - East Godavari District, official ghat register: https://eastgodavari.ap.gov.in/ghats
 - AP Tourism Boating Operations Management System: https://boatingcontrolroom.aptdc.in/
+- PTI health master plan and medical deployment: https://theprint.in/india/andhra-govt-to-deploy-over-30000-medical-personnel-for-godavari-pushkarams-2027/3023863/
+- TOI 4,932-work infrastructure portfolio: https://timesofindia.indiatimes.com/city/vijayawada/ap-plans-rs-4000-crore-works-for-godavari-pushkaralu-2027/articleshow/133520365.cms
+- Registered volunteer observation: https://www.deccanchronicle.com/southern-states/andhra-pradesh/andhra-pradesh-14488-volunteers-register-for-godavari-pushkaralu-2027-1988835
+- Priority road package: https://www.newindianexpress.com/states/andhra-pradesh/2026/Sep/10/godavari-pushkaralu-rs-300-cr-for-road-works-across-six-districts-in-andhra-pradesh
 - The Hindu, AI crowd management planning: https://www.thehindu.com/news/national/andhra-pradesh/ai-to-help-manage-crowd-during-2027-godavari-pushkaralu-in-andhra-pradesh/article71388987.ece
 - Deccan Chronicle, technology and preparedness plan: https://www.deccanchronicle.com/southern-states/andhra-pradesh/cm-directs-grand-arrangements-for-akhanda-godavari-pushkarams-1982221
 - National Water Data Portal, CWC hourly discharge: https://nwdp.nwic.gov.in/en/dataset/river-discharge-telemetry-hourly-central-water-commission-cwc
@@ -59,7 +63,8 @@ This release directly addresses the first seven through source labels, uncertain
 
 ### Delivered application
 
-- React 18 and strict TypeScript
+- React 19 and strict TypeScript
+- React Three Fiber 9 with a lazy-loaded Three.js operational scene
 - Vite production build
 - Recharts operational forecast
 - Lucide accessible icon system
@@ -79,6 +84,8 @@ scenario occupancy = bounded(base occupancy × local demand multiplier)
 ```
 
 The current thresholds and capacities are demonstration assumptions, not government standards. They must be replaced with calibrated local values after drills and historical replay.
+
+The existing `x` and `y` ghat fields are local presentation coordinates, not longitude and latitude. The 3D scene deliberately transforms those coordinates into a local Three.js scene. Before cartographic production use, the registry must add WGS84 latitude/longitude, surveyed elevation and a versioned projection adapter. Do not relabel the current 2D positions as geospatial coordinates.
 
 ## 5. Recommended authority production architecture
 

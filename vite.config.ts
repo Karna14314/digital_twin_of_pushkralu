@@ -4,11 +4,12 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
   build: {
-    chunkSizeWarningLimit: 650,
+    chunkSizeWarningLimit: 1200,
     rollupOptions: {
       output: {
         manualChunks: {
-          charts: ['recharts']
+          charts: ['recharts'],
+          twin: ['three', '@react-three/fiber', '@react-three/drei']
         }
       }
     }

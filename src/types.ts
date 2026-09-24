@@ -1,6 +1,7 @@
 export type Severity = 'critical' | 'high' | 'medium' | 'low'
 export type Status = 'normal' | 'watch' | 'restricted' | 'closed'
-export type SourceKind = 'simulation' | 'government' | 'sensor' | 'field' | 'forecast'
+export type SourceKind = 'simulation' | 'government' | 'sensor' | 'field' | 'forecast' | 'estimate' | 'plan' | 'derived'
+export type OperationalDomain = 'crowd' | 'river' | 'weather' | 'transport' | 'health' | 'security' | 'sanitation' | 'utilities' | 'technology' | 'command'
 
 export interface Ghat {
   id: string
@@ -41,7 +42,7 @@ export interface Incident {
 export interface Resource {
   id: string
   name: string
-  type: 'boat' | 'ambulance' | 'bus' | 'medical' | 'security' | 'utility'
+  type: 'boat' | 'swimmer' | 'ambulance' | 'bus' | 'medical' | 'security' | 'utility'
   total: number
   available: number
   committed: number
@@ -49,6 +50,31 @@ export interface Resource {
   eta?: string
   location: string
   updatedAt: string
+  basis: 'official-plan' | 'simulation' | 'observed'
+  domain: OperationalDomain
+}
+
+export interface PlanningMetric {
+  id: string
+  label: string
+  value: number
+  displayValue: string
+  unit: string
+  domain: OperationalDomain
+  evidence: 'official-plan' | 'official-estimate' | 'published-observation'
+  source: string
+  sourceDate: string
+  scope: string
+  confidence: 'high' | 'medium'
+}
+
+export interface DomainReadiness {
+  domain: OperationalDomain
+  label: string
+  readiness: number
+  status: 'planned' | 'in-progress' | 'validation-required'
+  records: number
+  summary: string
 }
 
 export interface TimelinePoint {

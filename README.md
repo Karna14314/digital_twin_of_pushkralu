@@ -8,15 +8,16 @@ The application ships with a complete simulated operating picture, deterministic
 
 ## Included product capabilities
 
-- **Command overview** — riverfront occupancy, density, river level, medical load, pressure forecast, active incidents, resources and source freshness.
-- **Interactive twin map** — 16 official East Godavari ghat names, both banks, sector pressure, flow, depth, access, medical context and incident markers.
+- **Command overview** — 2027 announced planning baseline, riverfront rehearsal occupancy, density, river level, medical load, active incidents, resources and source freshness.
+- **Interactive 2D/3D twin** — 16 official East Godavari ghat names, both banks, sector pressure, flow, depth, access, medical context, animated river traffic and a React Three Fiber command scene.
 - **Operations board** — all-zone matrix, corridor loads, shuttle/boat/ambulance routes, essential-service capacity and water safety envelope.
 - **Scenario laboratory** — current plan, bus-arrival surge, heavy rain, gate closure and medical surge scenarios with projected impact and recommended interventions.
 - **Incident command** — severity, evidence, recommended action, owner, acknowledgement and timestamped audit trail.
-- **Fleet and resources** — boats, ambulances, buses, medical teams and security deployments with availability and commitment.
+- **Fleet and resources** — 2027 planned rescue boats, trained swimmers, medical support vehicles, buses, field hospitals and separately simulated security deployments.
 - **Integration centre** — source registry, freshness, trust indicators, quality gates and live-operation readiness checklist.
 - **Offline PWA** — installable application shell with cached assets and a last-known operating picture during degraded connectivity.
-- **Auditability** — source, observation time, quality, model version, acknowledgement and human-override concepts are represented throughout the workflow.
+- **2027 readiness board** — dated, source-backed plan totals, separate 525-ghat Health master plan and 440-ghat development scope, ten operational domains, district allocation and evidence classification.
+- **Data truth model** — official plan, official estimate, published observation, authority sensor and rehearsal simulation are never presented as the same kind of fact.
 
 ## Run locally
 

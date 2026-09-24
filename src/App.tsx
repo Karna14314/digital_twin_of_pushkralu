@@ -1,5 +1,5 @@
 import { lazy, Suspense, useMemo, useState } from 'react'
-import { Activity, Bell, BookOpen, ChevronDown, CloudSun, Command, Database, FlaskConical, LayoutDashboard, LifeBuoy, MapPinned, Menu, Radio, Search, Settings, ShieldCheck, Siren, Users, X } from 'lucide-react'
+import { Activity, Bell, BookOpen, ChevronDown, ClipboardCheck, CloudSun, Command, Database, FlaskConical, LayoutDashboard, LifeBuoy, MapPinned, Menu, Radio, Search, Settings, ShieldCheck, Siren, Users, X } from 'lucide-react'
 import { ghats } from './data/twin'
 import type { Ghat } from './types'
 
@@ -9,9 +9,11 @@ const ResourcesPage = lazy(() => import('./components/Operations').then(module =
 const ScenarioLab = lazy(() => import('./components/ScenarioLab').then(module => ({ default: module.ScenarioLab })))
 const Incidents = lazy(() => import('./components/Incidents').then(module => ({ default: module.Incidents })))
 const DataCentre = lazy(() => import('./components/DataCentre').then(module => ({ default: module.DataCentre })))
+const PlanningReadiness = lazy(() => import('./components/PlanningReadiness').then(module => ({ default: module.PlanningReadiness })))
 
 const navigation = [
   { id: 'overview', label: 'Command overview', icon: LayoutDashboard },
+  { id: 'readiness', label: '2027 readiness', icon: ClipboardCheck },
   { id: 'operations', label: 'Operations board', icon: MapPinned },
   { id: 'scenarios', label: 'Scenario laboratory', icon: FlaskConical },
   { id: 'incidents', label: 'Incidents & actions', icon: Siren, badge: 4 },
@@ -53,7 +55,7 @@ export default function App() {
           <button className="menu-button" onClick={() => setMobileOpen(true)}><Menu size={20} /></button>
           <div className="breadcrumb"><span>Operations</span><b>/</b><strong>{pageTitle}</strong></div>
           <div className="top-actions">
-            <div className="weather-chip"><CloudSun size={18} /><span><b>31°C</b>Feels 36°</span><i /><span><b>24 km/h</b>SW wind</span></div>
+            <div className="weather-chip"><CloudSun size={18} /><span><b>31°C sim</b>Feels 36°</span><i /><span><b>24 km/h sim</b>SW wind</span></div>
             <button className="icon-button search-button" onClick={() => setSearchOpen(true)}><Search size={18} /></button>
             <div className="notification-wrap"><button className="icon-button" onClick={() => setNotificationsOpen(value => !value)}><Bell size={18} /><i className="notification-dot" /></button>{notificationsOpen && <div className="notification-panel"><div><b>Notifications</b><button onClick={() => setNotificationsOpen(false)}>Mark all read</button></div><article><i className="critical" /><span><b>Gate E2 pressure threshold</b><small>Critical · 1 min ago</small></span></article><article><i className="medium" /><span><b>Ambulance corridor obstruction</b><small>High · 21 min ago</small></span></article><article><i className="low" /><span><b>Rajamahendravaram loop load updated</b><small>Info · 6 min ago</small></span></article></div>}</div>
             <button className="role-button"><span>Control Officer</span><ChevronDown size={15} /></button>
@@ -61,11 +63,12 @@ export default function App() {
           </div>
         </header>
 
-        <div className="demo-banner"><Radio size={13} /><span><b>LIVE-READY DEMO</b> · Synthetic operational data; simulation clock 30 Jun 2027, 09:42 IST</span><button>Data status</button></div>
+        <div className="demo-banner"><Radio size={13} /><span><b>2027 DIGITAL TWIN</b> · Official planning baseline + synthetic live state · simulation clock 30 Jun 2027, 09:42 IST</span><button onClick={() => navigate('readiness')}>View evidence</button></div>
 
         <main>
           <Suspense fallback={<div className="app-loading"><Activity size={22} /><span>Loading operational module…</span></div>}>
             {page === 'overview' && <Overview ghats={ghats} selectedGhatId={selectedGhat?.id} onSelectGhat={selectGhat} onNavigate={navigate} />}
+            {page === 'readiness' && <PlanningReadiness />}
             {page === 'operations' && <Operations ghats={ghats} selectedGhatId={selectedGhat?.id} onSelectGhat={selectGhat} />}
             {page === 'scenarios' && <ScenarioLab selectedGhatId={selectedGhat?.id} onSelectGhat={selectGhat} />}
             {page === 'incidents' && <Incidents />}

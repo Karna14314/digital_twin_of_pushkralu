@@ -1,6 +1,7 @@
 import { Activity, Ambulance, ArrowDownRight, ArrowUpRight, Clock3, Droplets, Flame, Gauge, HeartPulse, Ship, Siren, Users, Waves } from 'lucide-react'
 import { Area, AreaChart, CartesianGrid, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { crowdTimeline, feeds, incidents, resources, totalCapacity, totalOccupancy } from '../data/twin'
+import { planningMetrics } from '../data/planning'
 import { pressureRisk } from '../lib/simulation'
 import type { Ghat } from '../types'
 import { CommandMap } from './CommandMap'
@@ -26,11 +27,17 @@ export function Overview({ ghats, selectedGhatId, onSelectGhat, onNavigate }: Ov
         <button className="primary-button" onClick={() => onNavigate('incidents')}>Review action board</button>
       </div>
 
+      <section className="plan-baseline-strip">
+        <div><span>2027 official plan</span><b>26 Jun — 07 Jul</b></div>
+        {planningMetrics.filter(metric => ['visitors', 'ghats', 'works', 'rescue-boats'].includes(metric.id)).map(metric => <div key={metric.id}><b>{metric.displayValue}</b><span>{metric.label}</span></div>)}
+        <button onClick={() => onNavigate('readiness')}>Evidence board →</button>
+      </section>
+
       <div className="metric-grid">
-        <Metric icon={Users} label="Pilgrims on riverfront" value={compact.format(totalOccupancy)} note="of 1.86 lakh safe envelope" trend="+8.2%" positive={false} color="teal" />
-        <Metric icon={Gauge} label="Peak density" value="3.8" suffix="/m²" note="Pushkar Ghat · threshold 4.0" trend="+0.7" positive={false} color="coral" />
-        <Metric icon={Waves} label="Dowleswaram level" value="42.1" suffix="ft" note="Warning level 43.0 ft" trend="+0.12 ft" positive={false} color="blue" />
-        <Metric icon={HeartPulse} label="Medical load" value="46" suffix="%" note="12 teams available" trend="Stable" positive color="amber" />
+        <Metric icon={Users} label="Pilgrims on riverfront · sim" value={compact.format(totalOccupancy)} note="of 1.86 lakh rehearsal envelope" trend="+8.2%" positive={false} color="teal" />
+        <Metric icon={Gauge} label="Peak density · sim" value="3.8" suffix="/m²" note="Pushkar Ghat · local rule" trend="+0.7" positive={false} color="coral" />
+        <Metric icon={Waves} label="Dowleswaram level · sim" value="42.1" suffix="ft" note="Warning level 43.0 ft" trend="+0.12 ft" positive={false} color="blue" />
+        <Metric icon={HeartPulse} label="Medical load · sim" value="46" suffix="%" note="12 field hospitals in rehearsal" trend="Stable" positive color="amber" />
       </div>
 
       <div className="dashboard-grid">
@@ -68,7 +75,7 @@ export function Overview({ ghats, selectedGhatId, onSelectGhat, onNavigate }: Ov
         <section className="twin-card chart-card">
           <div className="card-heading">
             <div><div className="eyebrow">Network demand</div><h2>Riverfront population & forecast</h2></div>
-            <div className="chart-legend"><span><i className="actual" />Observed</span><span><i className="forecast" />Forecast</span><span><i className="threshold" />Action threshold</span></div>
+            <div className="chart-legend"><span><i className="actual" />Rehearsal observed</span><span><i className="forecast" />Model forecast</span><span><i className="threshold" />Action rule</span></div>
           </div>
           <div className="chart-wrap">
             <ResponsiveContainer width="100%" height="100%">
@@ -95,8 +102,8 @@ export function Overview({ ghats, selectedGhatId, onSelectGhat, onNavigate }: Ov
             return (
               <div className="resource-row" key={resource.id}>
                 <span className={`resource-icon ${resource.type}`}><Icon size={17} /></span>
-                <span className="resource-info"><b>{resource.name}</b><small>{resource.available} available · {resource.committed} committed</small><i><em style={{ width: `${resource.available / resource.total * 100}%` }} /></i></span>
-                <strong>{Math.round(resource.available / resource.total * 100)}%</strong>
+                <span className="resource-info"><b>{resource.name}</b><small>Plan {resource.total.toLocaleString('en-IN')} · rehearsal {resource.available} available</small><i><em style={{ width: `${Math.max(3, resource.available / resource.total * 100)}%` }} /></i></span>
+                <strong>{resource.basis === 'official-plan' ? 'PLAN' : 'SIM'}</strong>
               </div>
             )
           })}
@@ -109,7 +116,7 @@ export function Overview({ ghats, selectedGhatId, onSelectGhat, onNavigate }: Ov
         <div className="feed-strip">
           {feeds.map(feed => <div className="feed-item" key={feed.name}><i /><span><b>{feed.name}</b><small>{feed.authority}</small></span><em>{feed.freshness}</em></div>)}
         </div>
-        <div className="simulation-banner"><Droplets size={15} /><span><b>Simulation environment:</b> no live government feed is connected. Values are synthetic, decision logic is active, and production ingestion requires the named authority adapter.</span><b>{Math.round(totalOccupancy / totalCapacity * 100)}% of monitored ghat capacity</b></div>
+        <div className="simulation-banner"><Droplets size={15} /><span><b>Evidence-aware state:</b> 2027 plan totals are sourced from government reviews; current occupancy, density, weather, river and dispatch state are synthetic rehearsal values. No live government feed is connected.</span><b>{Math.round(totalOccupancy / totalCapacity * 100)}% simulated load</b></div>
       </section>
     </div>
   )
